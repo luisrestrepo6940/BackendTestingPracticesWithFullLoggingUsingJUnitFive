@@ -12,6 +12,7 @@
 * [Requirements](#requirements).
 * [Recommended](#recommended).
 * [Configuration](#configuration).
+* [Test Runner Settings](#test-runner-settings).
 * [Troubleshooting](#troubleshooting).
 * [Maintainers](#maintainers).
 
@@ -56,9 +57,9 @@ src
 * Serenity-screenplay: 5.3.10.
 * Serenity-cucumber: 5.3.10.
 * Serenity-screenplay-rest: 5.3.10. 
-* Junit-jupiter:5.10.2. 
-* Cucumber-junit-platform-engine:7.14.0
-* Junit-platform-suite:1.10.2
+* Junit-jupiter: 5.10.2. 
+* Cucumber-junit-platform-engine: 7.14.0
+* Junit-platform-suite: 1.10.2
   
 [![Go Back Badge](https://img.shields.io/badge/Back-gray?style=flat)](#content)
 
@@ -72,6 +73,29 @@ src
 ### CONFIGURATION
 
 Download or clone the repository and configure the settings and project structure with SDK amazon corretto version 21.0.7 and gradle 8.5.
+
+[![Go Back Badge](https://img.shields.io/badge/Back-gray?style=flat)](#content)
+
+### TEST RUNNER SETTINGS
+
+Test runner:
+
+```java
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("features")
+
+public class TestRunnerCumulativeRecord {
+}
+```
+
+File junit-platform.properties:
+
+```properties
+cucumber.snippet-type=camelcase
+cucumber.glue=co.com.certification.stepdefinitions
+cucumber.plugin=pretty, net.serenitybdd.cucumber.core.plugin.SerenityReporterParallel
+```
 
 [![Go Back Badge](https://img.shields.io/badge/Back-gray?style=flat)](#content)
 
