@@ -78,6 +78,17 @@ Download or clone the repository and configure the settings and project structur
 
 ### TEST RUNNER SETTINGS
 
+File build.gradle:
+
+```gradle
+dependencies {
+...
+    testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
+    testImplementation "io.cucumber:cucumber-junit-platform-engine:7.14.0"
+    testImplementation "org.junit.platform:junit-platform-suite:1.10.2"
+}
+```
+
 Test runner:
 
 ```java
