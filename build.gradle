@@ -1,0 +1,83 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id("io.freefair.lombok") version "9.4.0"
+    id "net.serenity-bdd.serenity-gradle-plugin" version "4.2.34"
+}
+
+group 'co.com.certification'
+
+java {
+    sourceCompatibility = 21
+    targetCompatibility = 21
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    serenityVersion = '5.3.10'
+}
+
+dependencies {
+    implementation "net.serenity-bdd:serenity-core:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-junit:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay-rest:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-cucumber:${serenityVersion}"
+    implementation 'org.apache.logging.log4j:log4j-core:2.25.4'
+    testImplementation "org.slf4j:slf4j-simple:2.0.17"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
+    testImplementation "io.cucumber:cucumber-junit-platform-engine:7.14.0"
+    testImplementation "org.junit.platform:junit-platform-suite:1.10.2"
+}
+
+configurations.configureEach {
+    resolutionStrategy {
+        force 'org.seleniumhq.selenium:selenium-java:4.41.0'
+        force 'io.opentelemetry:opentelemetry-api:1.62.0'
+        force 'io.opentelemetry:opentelemetry-context:1.62.0'
+        force 'io.opentelemetry:opentelemetry-sdk:1.62.0'
+        force 'io.opentelemetry:opentelemetry-sdk-common:1.62.0'
+        force 'io.opentelemetry:opentelemetry-sdk-trace:1.62.0'
+        force 'io.opentelemetry:opentelemetry-sdk-metrics:1.62.0'
+        force 'io.opentelemetry:opentelemetry-sdk-logs:1.62.0'
+        force 'io.opentelemetry:opentelemetry-semconv:1.23.1-alpha'
+    }
+}
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+test {
+    useJUnitPlatform()
+
+    // Se forza el UTF-8 base para los checks verdes (✔) en ejecuciones en windows
+    def testProperties = [
+            "file.encoding"      : "UTF-8",
+            "sun.stdout.encoding": "UTF-8",
+            "sun.stderr.encoding": "UTF-8"
+    ]
+
+    // Cuando se usen, el proposito es mantener tags dinámicos funcionando en pipeline sin romper la caché de Gradle. Se filtra para pasar SOLO el motor de Cucumber/JUnit y sus tags
+    System.getProperties().each { key, value ->
+        String k = key.toString()
+        if (k.startsWith("cucumber.") || k.startsWith("junit.")) {
+            testProperties[k] = value.toString()
+        }
+    }
+    systemProperties(testProperties)
+
+    testLogging {
+        showStandardStreams = true
+        events "passed", "failed", "skipped"
+    }
+
+    finalizedBy 'aggregate'
+}
