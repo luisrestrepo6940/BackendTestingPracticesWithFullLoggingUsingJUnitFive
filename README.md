@@ -12,7 +12,7 @@
 * [Requirements](#requirements).
 * [Recommended](#recommended).
 * [Configuration](#configuration).
-* [Test Runner Settings](#test-runner-settings).
+* [JUnit 5 Settings](#junit-5-settings).
 * [Troubleshooting](#troubleshooting).
 * [Maintainers](#maintainers).
 
@@ -76,7 +76,7 @@ Download or clone the repository and configure the settings and project structur
 
 [![Go Back Badge](https://img.shields.io/badge/Back-gray?style=flat)](#content)
 
-### TEST RUNNER SETTINGS
+### JUNIT 5 SETTINGS
 
 File build.gradle:
 
@@ -89,6 +89,14 @@ dependencies {
 }
 ```
 
+File junit-platform.properties:
+
+```properties
+cucumber.snippet-type=camelcase
+cucumber.glue=co.com.certification.stepdefinitions
+cucumber.plugin=pretty, net.serenitybdd.cucumber.core.plugin.SerenityReporterParallel
+```
+
 Test runner:
 
 ```java
@@ -98,14 +106,6 @@ Test runner:
 
 public class TestRunnerCumulativeRecord {
 }
-```
-
-File junit-platform.properties:
-
-```properties
-cucumber.snippet-type=camelcase
-cucumber.glue=co.com.certification.stepdefinitions
-cucumber.plugin=pretty, net.serenitybdd.cucumber.core.plugin.SerenityReporterParallel
 ```
 
 [![Go Back Badge](https://img.shields.io/badge/Back-gray?style=flat)](#content)
