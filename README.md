@@ -1,4 +1,4 @@
-<h1 align="center">Back-end testing project using the required configuration to launch with a test runner using JUnit 5</h1>
+<h1 style="text-align: center">Back-end testing project using the required configuration to launch with a test runner using JUnit 5</h1>
 
 ![Badge en Desarollo](https://img.shields.io/badge/STATUS-IN%20EVOLUTION-blue)
 ![Static Badge](https://img.shields.io/badge/Java-red?style=flat-square)
